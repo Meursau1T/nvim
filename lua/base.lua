@@ -49,15 +49,3 @@ vim.opt.virtualedit = 'onemore'
 vim.opt.laststatus = 2
 vim.cmd [[set noshowmode]] --不再在最下行显示输入模式，因为有状态栏
 
-
--- inoremap <expr> <Tab> pumvisible() ? '\<C-n>' : '\<Tab>'
--- inoremap <expr> <S-Tab> pumvisible() ? '\<C-p>' : '\<S-Tab>'
-
--- jump between panels
--- nnoremap <C-J> <C-W><C-J>
--- nnoremap <C-K> <C-W><C-K>
--- nnoremap <C-L> <C-W><C-L>
--- nnoremap <C-H> <C-W><C-H>
-
--- autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescriptreact
-
