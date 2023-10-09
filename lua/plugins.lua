@@ -11,7 +11,6 @@ packer.startup(function(use)
   use {
     'itchyny/lightline.vim',
     'morhetz/gruvbox',
-    -- 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension' },
     'tpope/vim-fugitive', -- vim中使用Git
     'jiangmiao/auto-pairs' -- 括号自动补全
   }
@@ -24,6 +23,7 @@ packer.startup(function(use)
   use 'hrsh7th/cmp-nvim-lsp' -- nvim-cmp source for neovim's built-in lsp
   use 'hrsh7th/nvim-cmp' -- Completion
   use 'neovim/nvim-lspconfig' -- LSP基础
+  use 'glepnir/lspsaga.nvim'
 
   use 'nvim-lua/plenary.nvim'
   use 'nvim-telescope/telescope.nvim'
