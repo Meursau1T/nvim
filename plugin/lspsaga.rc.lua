@@ -3,7 +3,7 @@ if (not status) then return end
 
 saga.setup {
   server_filetype_map = {},
-  code_action_prompt = {
+  lightbulb = {
     enable = false,
   }
 }
