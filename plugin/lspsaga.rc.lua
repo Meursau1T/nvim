@@ -2,7 +2,10 @@ local status, saga = pcall(require, 'lspsaga')
 if (not status) then return end
 
 saga.setup {
-  server_filetype_map = {}
+  server_filetype_map = {},
+  code_action_prompt = {
+    enable = false,
+  }
 }
 
 local tops = { noremap = true, silent = ture }
