@@ -4,6 +4,8 @@ if (not status) then return end
 local protocol = require('vim.lsp.protocol')
 
 local on_attach = function(client, bufnr)
+  -- always show gutter after attach
+  vim.opt.signcolumn = "yes"
   -- formatting
   --if client.server_capabilities.documentFormattingProvider then
     --vim.api.nvim_command [[augroup Fromat]]
