@@ -54,3 +54,7 @@ vim.cmd [[set noshowmode]] --不再在最下行显示输入模式，因为有状
 	-- map <C-P> :!rsync -az --exclude={'node_modules','.eden-mono','.temp'} ~/workspace/douyin_web_2 wangxinfu.wxf@10.37.21.176:/home/wangxinfu.wxf/workspace; rsync -az --exclude={'node_modules','.eden-mono','.temp'} ~/workspace/douyin_web wangxinfu.wxf@10.37.21.176:/home/wangxinfu.wxf/workspace<CR>
 -- ]]
 
+-- nohls by enter
+vim.cmd[[
+    noremap <CR> :nohlsearch<CR>
+]]
