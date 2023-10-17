@@ -58,3 +58,6 @@ vim.cmd [[set noshowmode]] --不再在最下行显示输入模式，因为有状
 vim.cmd[[
     noremap <CR> :nohlsearch<CR>
 ]]
+
+-- gutter transparent
+vim.api.nvim_set_hl(0, "SignColumn", { bg = "none"})

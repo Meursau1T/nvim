@@ -11,7 +11,6 @@ packer.startup(function(use)
   use {
     'itchyny/lightline.vim',
     'morhetz/gruvbox',
-    'tpope/vim-fugitive', -- vim中使用Git
     'jiangmiao/auto-pairs' -- 括号自动补全
   }
   use {
