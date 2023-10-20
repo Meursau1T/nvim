@@ -45,9 +45,13 @@ telescope.load_extension('file_browser')
 
 local opts = { noremap = true, silent = true }
 vim.keymap.set('n', '<leader>ff', builtin.find_files, opts)
-vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
+vim.keymap.set('n', '<leader>fl', builtin.live_grep, {})
 vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
+vim.keymap.set('n', '<leader>fgs', builtin.git_status, {})
+vim.keymap.set('n', '<leader>fgs', builtin.git_status, {})
+vim.keymap.set('n', '<leader>fgs', builtin.git_status, {})
+vim.keymap.set('n', '<leader>fgc', builtin.git_commits, {})
 
 -- open telescope-file-browser in current buffer
 vim.api.nvim_set_keymap(

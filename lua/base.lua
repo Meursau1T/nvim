@@ -56,7 +56,7 @@ vim.cmd [[set noshowmode]] --不再在最下行显示输入模式，因为有状
 
 -- nohls by enter
 vim.cmd[[
-    noremap <CR> :nohlsearch<CR>
+    noremap <leader><space> :nohlsearch<CR>
 ]]
 
 -- gutter transparent
