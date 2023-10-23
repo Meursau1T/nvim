@@ -61,3 +61,8 @@ vim.cmd[[
 
 -- gutter transparent
 vim.api.nvim_set_hl(0, "SignColumn", { bg = "none"})
+
+vim.cmd[[
+    noremap <leader>r1 :!cargo run -q --manifest-path ~/source/rsync-git/Cargo.toml<CR>
+    noremap <leader>r2 :!cargo run -q --manifest-path ~/source/rsync-git/Cargo.toml 2<CR>
+]]
