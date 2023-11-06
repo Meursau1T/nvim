@@ -63,6 +63,6 @@ vim.cmd[[
 vim.api.nvim_set_hl(0, "SignColumn", { bg = "none"})
 
 vim.cmd[[
-    noremap <leader>r1 :!cargo run -q --manifest-path ~/source/rsync-git/Cargo.toml<CR>
-    noremap <leader>r2 :!cargo run -q --manifest-path ~/source/rsync-git/Cargo.toml 2<CR>
+    noremap <leader>r1 :!cargo run -q --manifest-path ~/source/rsync-git/Cargo.toml -- -u wangxinfu.wxf@10.37.21.176 -l /home/meursault/workspace/douyin_web -r /home/wangxinfu.wxf/workspace/douyin_web<CR>
+    noremap <leader>r2 :!cargo run -q --manifest-path ~/source/rsync-git/Cargo.toml -- -u wangxinfu.wxf@10.37.21.176 -l /home/meursault/workspace/douyin_web_2 -r /home/wangxinfu.wxf/workspace/douyin_web_2<CR>
 ]]
