@@ -46,6 +46,7 @@ telescope.load_extension('file_browser')
 local opts = { noremap = true, silent = true }
 vim.keymap.set('n', '<leader>ff', builtin.find_files, opts)
 vim.keymap.set('n', '<leader>fl', builtin.live_grep, {})
+vim.keymap.set('n', '<leader>fk', builtin.grep_string, {})
 vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
 vim.keymap.set('n', '<leader>fgs', builtin.git_status, {})
