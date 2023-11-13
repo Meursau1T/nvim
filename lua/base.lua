@@ -66,3 +66,23 @@ vim.cmd[[
     noremap <leader>r1 :!cargo run -q --manifest-path ~/source/rsync-git/Cargo.toml -- -u wangxinfu.wxf@10.37.21.176 -l /home/meursault/workspace/douyin_web -r /home/wangxinfu.wxf/workspace/douyin_web<CR>
     noremap <leader>r2 :!cargo run -q --manifest-path ~/source/rsync-git/Cargo.toml -- -u wangxinfu.wxf@10.37.21.176 -l /home/meursault/workspace/douyin_web_2 -r /home/wangxinfu.wxf/workspace/douyin_web_2<CR>
 ]]
+
+vim.api.nvim_create_autocmd({"BufWritePost"}, {
+  callback = function()
+    local curr = vim.api.nvim_buf_get_name(0)
+    if (string.match(curr, 'douyin_web/'))
+    then
+      vim.cmd([[
+        :!cargo run -q --manifest-path ~/source/rsync-git/Cargo.toml -- -d 1 -u wangxinfu.wxf@10.37.21.176 -l /home/meursault/workspace/douyin_web -r /home/wangxinfu.wxf/workspace/douyin_web
+        call feedkeys("\<CR>")
+      ]])
+    elseif (string.match(curr, 'douyin_web_2/'))
+    then
+      vim.cmd([[
+        :!cargo run -q --manifest-path ~/source/rsync-git/Cargo.toml -- -d 1 -u wangxinfu.wxf@10.37.21.176 -l /home/meursault/workspace/douyin_web_2 -r /home/wangxinfu.wxf/workspace/douyin_web_2
+        call feedkeys("\<CR>")
+      ]])
+    else
+    end
+  end,
+})
