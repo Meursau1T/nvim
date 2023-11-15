@@ -21,4 +21,10 @@ nvim_lsp.tsserver.setup {
   cmd = { 'typescript-language-server', '--stdio'}
 }
 
-nvim_lsp.rust_analyzer.setup{}
+nvim_lsp.csharp_ls.setup {
+  on_attach = on_attach,
+}
+
+nvim_lsp.rust_analyzer.setup{
+  on_attach = on_attach,
+}

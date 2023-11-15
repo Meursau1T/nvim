@@ -49,11 +49,6 @@ vim.opt.virtualedit = 'onemore'
 vim.opt.laststatus = 2
 vim.cmd [[set noshowmode]] --不再在最下行显示输入模式，因为有状态栏
 
--- Rsync
--- vim.cmd [[
-	-- map <C-P> :!rsync -az --exclude={'node_modules','.eden-mono','.temp'} ~/workspace/douyin_web_2 wangxinfu.wxf@10.37.21.176:/home/wangxinfu.wxf/workspace; rsync -az --exclude={'node_modules','.eden-mono','.temp'} ~/workspace/douyin_web wangxinfu.wxf@10.37.21.176:/home/wangxinfu.wxf/workspace<CR>
--- ]]
-
 -- nohls by enter
 vim.cmd[[
     noremap <leader><space> :nohlsearch<CR>
@@ -62,24 +57,25 @@ vim.cmd[[
 -- gutter transparent
 vim.api.nvim_set_hl(0, "SignColumn", { bg = "none"})
 
-vim.cmd[[
-    noremap <leader>r1 :!cargo run -q --manifest-path ~/source/rsync-git/Cargo.toml -- -u wangxinfu.wxf@10.37.21.176 -l /home/meursault/workspace/douyin_web -r /home/wangxinfu.wxf/workspace/douyin_web<CR>
-    noremap <leader>r2 :!cargo run -q --manifest-path ~/source/rsync-git/Cargo.toml -- -u wangxinfu.wxf@10.37.21.176 -l /home/meursault/workspace/douyin_web_2 -r /home/wangxinfu.wxf/workspace/douyin_web_2<CR>
-]]
-
 vim.api.nvim_create_autocmd({"BufWritePost"}, {
   callback = function()
     local curr = vim.api.nvim_buf_get_name(0)
     if (string.match(curr, 'douyin_web/'))
     then
       vim.cmd([[
-        :!cargo run -q --manifest-path ~/source/rsync-git/Cargo.toml -- -d 1 -u wangxinfu.wxf@10.37.21.176 -l /home/meursault/workspace/douyin_web -r /home/wangxinfu.wxf/workspace/douyin_web
+        :AsyncRun ~/source/rsync-g/bin/Debug/net7.0/rsync-g -u wangxinfu.wxf@10.37.21.176 -l /home/meursault/workspace/douyin_web -r /home/wangxinfu.wxf/workspace/douyin_web -d false
         call feedkeys("\<CR>")
       ]])
     elseif (string.match(curr, 'douyin_web_2/'))
     then
       vim.cmd([[
-        :!cargo run -q --manifest-path ~/source/rsync-git/Cargo.toml -- -d 1 -u wangxinfu.wxf@10.37.21.176 -l /home/meursault/workspace/douyin_web_2 -r /home/wangxinfu.wxf/workspace/douyin_web_2
+        :AsyncRun ~/source/rsync-g/bin/Debug/net7.0/rsync-g -u wangxinfu.wxf@10.37.21.176 -l /home/meursault/workspace/douyin_web_2 -r /home/wangxinfu.wxf/workspace/douyin_web_2 -d false
+        call feedkeys("\<CR>")
+      ]])
+    elseif (string.match(curr, 'douyin_web_home/'))
+    then
+      vim.cmd([[
+        :AsyncRun ~/source/rsync-g/bin/Debug/net7.0/rsync-g -u wangxinfu.wxf@10.37.21.176 -l /home/meursault/workspace/douyin_web_home -r /home/wangxinfu.wxf/workspace/douyin_web_home -d false
         call feedkeys("\<CR>")
       ]])
     else
