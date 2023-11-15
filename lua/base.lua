@@ -72,10 +72,10 @@ vim.api.nvim_create_autocmd({"BufWritePost"}, {
         :AsyncRun ~/source/rsync-g/bin/Debug/net7.0/rsync-g -u wangxinfu.wxf@10.37.21.176 -l /home/meursault/workspace/douyin_web_2 -r /home/wangxinfu.wxf/workspace/douyin_web_2 -d false
         call feedkeys("\<CR>")
       ]])
-    elseif (string.match(curr, 'douyin_web_home/'))
+    elseif (string.match(curr, 'douyin_home_web/'))
     then
       vim.cmd([[
-        :AsyncRun ~/source/rsync-g/bin/Debug/net7.0/rsync-g -u wangxinfu.wxf@10.37.21.176 -l /home/meursault/workspace/douyin_web_home -r /home/wangxinfu.wxf/workspace/douyin_web_home -d false
+        :AsyncRun ~/source/rsync-g/bin/Debug/net7.0/rsync-g -u wangxinfu.wxf@10.37.21.176 -l /home/meursault/workspace/douyin_home_web -r /home/wangxinfu.wxf/workspace/douyin_home_web -d false
         call feedkeys("\<CR>")
       ]])
     else
