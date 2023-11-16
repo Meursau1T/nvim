@@ -57,6 +57,7 @@ vim.cmd[[
 -- gutter transparent
 vim.api.nvim_set_hl(0, "SignColumn", { bg = "none"})
 
+-- rsync
 vim.api.nvim_create_autocmd({"BufWritePost"}, {
   callback = function()
     local curr = vim.api.nvim_buf_get_name(0)
@@ -82,3 +83,8 @@ vim.api.nvim_create_autocmd({"BufWritePost"}, {
     end
   end,
 })
+
+vim.cmd[[
+    noremap <leader>cs :s/^\s*\(.*\)$/console.log('dev wxf \1', \1);/<CR>:nohlsearch<CR>
+    noremap <leader>cc :s#_\(\l\)#\u\1#g<CR>:nohlsearch<CR>
+]]
