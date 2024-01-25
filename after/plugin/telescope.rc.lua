@@ -15,19 +15,34 @@ local fb_actions = require 'telescope'.extensions.file_browser.actions
 
 telescope.setup {
   defaults = {
-    mappings = {
-      n = {
-        ['q'] = actions.close
-      }
+    layout_strategy = 'vertical',
+    layout_config = {
+      horizontal = {
+        size = {
+          width = "95%",
+          height = "95%",
+        },
+      },
+      vertical = {
+        size = {
+          width = "95%",
+          height = "95%",
+        },
+      },
+    },
+  },
+  mappings = {
+    n = {
+      ['q'] = actions.close
     }
   },
   extensions = {
     file_browser = {
-      theme = 'dropdown',
       hijack_netrw = true,
       mappings = {
         ['i'] = {
           ['<C-w>'] = function() vim.cmd{ 'normal vbd' } end,
+          ["<C-t>"] = require "telescope.actions".select_tab,
         },
         ['n'] = {
           ['N'] = fb_actions.create,
@@ -43,7 +58,6 @@ telescope.setup {
     buffers = {
       show_all_buffers = true,
       sort_lastused = true,
-      theme = "dropdown",
       mappings = {
         i = {
           ["<c-d>"] = "delete_buffer",
