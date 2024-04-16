@@ -61,22 +61,22 @@ vim.api.nvim_set_hl(0, "SignColumn", { bg = "none"})
 vim.api.nvim_create_autocmd({"BufWritePost"}, {
   callback = function()
     local curr = vim.api.nvim_buf_get_name(0)
-    if (string.match(curr, 'douyin_web/'))
+    if (string.match(curr, 'douyin_web_2/'))
     then
       vim.cmd([[
-        :AsyncRun ~/source/rsync-g/bin/Debug/net7.0/rsync-g -u wangxinfu.wxf@10.37.21.176 -l /home/meursault/workspace/douyin_web -r /home/wangxinfu.wxf/workspace/douyin_web -d false
+        :AsyncRun ~/source/rsync-g/bin/Debug/net7.0/rsync-g -u wangxinfu.wxf@10.37.21.176 -l /home/meursault/workspace/douyin_web_2 -r /home/wangxinfu.wxf/workspace/douyin_web_2 -d true
         call feedkeys("\<CR>")
       ]])
-    elseif (string.match(curr, 'douyin_web_2/'))
+    elseif (string.match(curr, 'douyin_web/'))
     then
       vim.cmd([[
-        :AsyncRun ~/source/rsync-g/bin/Debug/net7.0/rsync-g -u wangxinfu.wxf@10.37.21.176 -l /home/meursault/workspace/douyin_web_2 -r /home/wangxinfu.wxf/workspace/douyin_web_2 -d false
+        :AsyncRun ~/source/rsync-g/bin/Debug/net7.0/rsync-g -u wangxinfu.wxf@10.37.21.176 -l /home/meursault/workspace/douyin_web -r /home/wangxinfu.wxf/workspace/douyin_web -d true
         call feedkeys("\<CR>")
       ]])
     elseif (string.match(curr, 'douyin_home_web/'))
     then
       vim.cmd([[
-        :AsyncRun ~/source/rsync-g/bin/Debug/net7.0/rsync-g -u wangxinfu.wxf@10.37.21.176 -l /home/meursault/workspace/douyin_home_web -r /home/wangxinfu.wxf/workspace/douyin_home_web -d false
+        :AsyncRun ~/source/rsync-g/bin/Debug/net7.0/rsync-g -u wangxinfu.wxf@10.37.21.176 -l /home/meursault/workspace/douyin_home_web -r /home/wangxinfu.wxf/workspace/douyin_home_web -d true
         call feedkeys("\<CR>")
       ]])
     else
