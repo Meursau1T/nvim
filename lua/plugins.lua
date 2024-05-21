@@ -1,34 +1,39 @@
-local status, packer = pcall(require, 'packer')
-if (not status) then
-  print('Packer is not installed', packer)
-  return
+-- lazy.nvim
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
 end
+vim.opt.rtp:prepend(lazypath)
 
-vim.cmd [[packadd packer.nvim]]
 
-packer.startup(function(use)
-  use { "wbthomason/packer.nvim" } -- Packer自己
-  use {
-    'itchyny/lightline.vim',
-    'morhetz/gruvbox',
-    'jiangmiao/auto-pairs' -- 括号自动补全
-  }
-  use {
+require("lazy").setup({
+  'itchyny/lightline.vim',
+  'jiangmiao/auto-pairs', -- 括号自动补全
+  { "ellisonleao/gruvbox.nvim", priority = 1000 , config = true, opts = ...},
+  {
     'nvim-treesitter/nvim-treesitter', -- 着色
-    run = ':TSUpdate'
-  }
-  use 'onsails/lspkind-nvim' --- vscode-like pictograms
-  use 'hrsh7th/cmp-buffer' -- nvim-cmp source for buffer words
-  use 'hrsh7th/cmp-nvim-lsp' -- nvim-cmp source for neovim's built-in lsp
-  use 'hrsh7th/nvim-cmp' -- Completion
-  use 'neovim/nvim-lspconfig' -- LSP基础
-  use 'glepnir/lspsaga.nvim'
+    build = ':TSUpdate'
+  },
+  'onsails/lspkind-nvim', --- vscode-like pictograms
+  'hrsh7th/cmp-buffer', -- nvim-cmp source for buffer words
+  'hrsh7th/cmp-nvim-lsp', -- nvim-cmp source for neovim's built-in lsp
+  'hrsh7th/nvim-cmp', -- Completion
+  'neovim/nvim-lspconfig', -- LSP基础
+  'glepnir/lspsaga.nvim',
 
-  use 'nvim-lua/plenary.nvim'
-  use 'nvim-telescope/telescope.nvim'
-  use 'nvim-telescope/telescope-file-browser.nvim'
-  use 'lewis6991/gitsigns.nvim'
+  'nvim-lua/plenary.nvim',
+  'nvim-telescope/telescope.nvim',
+  'nvim-telescope/telescope-file-browser.nvim',
+  'tanvirtin/vgit.nvim',
 
-  use "williamboman/mason.nvim"
-  use 'skywind3000/asyncrun.vim'
-end)
+  'williamboman/mason.nvim',
+  'skywind3000/asyncrun.vim',
+})
+

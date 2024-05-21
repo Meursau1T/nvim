@@ -36,11 +36,8 @@ vim.opt.shiftwidth = 2
 vim.opt.wildmode = 'longest:list'
 
 -- Color scheme
-vim.cmd([[
-    set termguicolors
-    colorscheme gruvbox
-    let g:gruvbox_contrast_dark = 'medium'
-]])
+vim.o.background = "dark"
+vim.cmd([[colorscheme gruvbox]])
 
 -- Reset keymap
 vim.opt.virtualedit = 'onemore'
