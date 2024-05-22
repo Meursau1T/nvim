@@ -25,13 +25,22 @@ require("lazy").setup({
   'hrsh7th/cmp-buffer', -- nvim-cmp source for buffer words
   'hrsh7th/cmp-nvim-lsp', -- nvim-cmp source for neovim's built-in lsp
   'hrsh7th/nvim-cmp', -- Completion
-  'neovim/nvim-lspconfig', -- LSP基础
+  {
+    'neovim/nvim-lspconfig',
+    config = function()
+      require('gitsigns').setup {
+        signcolumn = false,
+        numhl = true, -- Toggle with `:Gitsigns toggle_current_line_blame`
+        current_line_blame = true,
+      }
+    end
+  }, -- LSP基础
   'glepnir/lspsaga.nvim',
 
-  'nvim-lua/plenary.nvim',
+  'nvim-lua/plenary.nvim', -- lua语言库，许多插件的基础依赖
   'nvim-telescope/telescope.nvim',
   'nvim-telescope/telescope-file-browser.nvim',
-  'tanvirtin/vgit.nvim',
+  'lewis6991/gitsigns.nvim',
 
   'williamboman/mason.nvim',
   'skywind3000/asyncrun.vim', -- 用于后台调用rsync
