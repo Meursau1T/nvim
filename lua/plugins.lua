@@ -32,7 +32,7 @@ require("lazy").setup({
   'nvim-telescope/telescope.nvim',
   'nvim-telescope/telescope-file-browser.nvim',
   {
-    'lewis6991/gitsigns.nvim',
+    'lewis6991/gitsigns.nvim', -- GitBlame和增删标记
     config = function()
       require('gitsigns').setup {
         signcolumn = false,
@@ -41,6 +41,7 @@ require("lazy").setup({
       }
     end
   },
+  "sindrets/diffview.nvim", -- 查看Git文件历史Diff
 
   'williamboman/mason.nvim',
   'skywind3000/asyncrun.vim', -- 用于后台调用rsync
