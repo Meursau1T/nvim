@@ -34,6 +34,13 @@ require("lazy").setup({
   'tanvirtin/vgit.nvim',
 
   'williamboman/mason.nvim',
-  'skywind3000/asyncrun.vim',
+  'skywind3000/asyncrun.vim', -- 用于后台调用rsync
+
+  {
+    "folke/ts-comments.nvim",
+    opts = {},
+    event = "VeryLazy",
+    enabled = vim.fn.has("nvim-0.10.0") == 1,
+  }, -- 注释工具
 })
 
