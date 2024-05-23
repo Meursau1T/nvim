@@ -5,7 +5,14 @@ local protocol = require('vim.lsp.protocol')
 
 local on_attach = function(client, bufnr)
   -- always show gutter after attach
-  vim.opt.signcolumn = "yes"
+  -- vim.opt.signcolumn = "yes"
+  vim.diagnostic.config({
+    virtual_text = true,
+    signs = false,
+    underline = true,
+    update_in_insert = false,
+    severity_sort = false,
+  })
   -- formatting
   --if client.server_capabilities.documentFormattingProvider then
     --vim.api.nvim_command [[augroup Fromat]]
