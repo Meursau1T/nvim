@@ -4,6 +4,11 @@ vim.cmd([[
     let g:python_host_prog='C:/Users/MeursaulT/scoop/apps/python/current/python.exe'
 ]])
 
+-- neovide配置
+if vim.g.neovide then
+  vim.o.guifont = "Cascadia Code:h13"
+end
+
 -- 常用系统配置
 vim.g.mapleader = ','
 vim.g.directory = '$HOME/.vim/tmp/'    -- 设置directory，避免出现无法新建swap文件夹的错误
@@ -54,3 +59,5 @@ vim.api.nvim_set_hl(0, "SignColumn", { bg = "none"})
 vim.cmd[[
     noremap <leader>cc :s#_\(\l\)#\u\1#g<CR>:nohlsearch<CR>
 ]]
+
+
