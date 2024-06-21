@@ -7,6 +7,7 @@ vim.cmd([[
 -- neovide配置
 if vim.g.neovide then
   vim.o.guifont = "Cascadia Code:h13"
+  vim.g.neovide_cursor_vfx_mode = "pixiedust"
 end
 
 -- 常用系统配置
@@ -46,7 +47,12 @@ vim.opt.virtualedit = 'onemore'
 
 -- Lightline settings
 vim.opt.laststatus = 2
-vim.cmd [[set noshowmode]] --不再在最下行显示输入模式，因为有状态栏
+vim.cmd [[
+  set noshowmode
+  let g:lightline = {
+  \ 'colorscheme': 'solarized'
+  \ }
+]] --不再在最下行显示输入模式，因为有状态栏
 
 -- nohls by enter
 vim.cmd[[
@@ -61,3 +67,35 @@ vim.cmd[[
 ]]
 
 
+--- rsync
+vim.api.nvim_create_autocmd({"BufWritePost"}, {
+  callback = function()
+    local curr = vim.api.nvim_buf_get_name(0)
+    if (string.match(curr, 'douyin_web_2/'))
+    then
+      vim.cmd([[
+        :AsyncRun -silent ~/source/rsync-g/bin/Debug/net7.0/rsync-g -u byteide@10.174.131.249 -l /home/meursault/workspace/douyin_web_2 -r /cloudide/workspace/douyin_web -d true
+        call feedkeys("\<CR>")
+      ]])
+    elseif (string.match(curr, 'douyin_web_3/'))
+    then
+      vim.cmd([[
+        :AsyncRun -silent ~/source/rsync-g/bin/Debug/net7.0/rsync-g -u byteide@10.174.152.22 -l /home/meursault/workspace/douyin_web_3 -r /cloudide/workspace/douyin_web -d true
+        call feedkeys("\<CR>")
+      ]])
+    elseif (string.match(curr, 'douyin_web/'))
+    then
+      vim.cmd([[
+       :AsyncRun -silent ~/source/rsync-g/bin/Debug/net7.0/rsync-g -u wangxinfu.wxf@10.37.21.176 -l /home/meursault/workspace/douyin_web -r /home/wangxinfu.wxf/workspace/douyin_web -d true
+        call feedkeys("\<CR>")
+      ]])
+    elseif (string.match(curr, 'douyin_home_web/'))
+   then
+      vim.cmd([[
+        :AsyncRun -silent ~/source/rsync-g/bin/Debug/net7.0/rsync-g -u wangxinfu.wxf@10.37.21.176 -l /home/meursault/workspace/douyin_home_web -r /home/wangxinfu.wxf/workspace/douyin_home_web -d true
+        call feedkeys("\<CR>")
+      ]])
+    else
+    end
+  end,
+})
