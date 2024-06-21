@@ -24,8 +24,18 @@ end
 
 nvim_lsp.tsserver.setup {
   on_attach = on_attach,
-  filetypes = { 'typescript', 'typescriptreact', 'typescript.tsx', 'javascript', 'vue' },
+  filetypes = { 'typescript', 'typescriptreact', 'typescript.tsx', 'javascript' },
   cmd = { 'typescript-language-server', '--stdio'},
+
+    init_options = {
+    plugins = {
+      {
+        name = '@vue/typescript-plugin',
+        location = "/home/meursault/.nvm/versions/node/v22.3.0/bin/vue-language-server",
+        languages = { 'vue' },
+      },
+    },
+  },
 }
 
 nvim_lsp.csharp_ls.setup {
@@ -37,8 +47,8 @@ nvim_lsp.rust_analyzer.setup{
 }
 
 nvim_lsp.volar.setup {
-  filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
-  -- cmd = { "/home/meursault/.nvm/versions/node/v22.3.0/bin/vue-language-server", "--stdio" },
+  on_attach = on_attach,
+  filetypes = { 'vue' },
   init_options = {
     vue = {
       hybridMode = false,
