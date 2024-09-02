@@ -24,14 +24,14 @@ end
 
 nvim_lsp.tsserver.setup {
   on_attach = on_attach,
-  filetypes = { 'typescript', 'typescriptreact', 'typescript.tsx', 'javascript', 'vue' },
+  filetypes = { 'typescript', 'typescriptreact', 'typescript.tsx', 'javascript', 'vue', 'javascriptreact' },
   cmd = { '/home/meursault/.nvm/versions/node/v16.18.0/bin/typescript-language-server', '--stdio'},
 
   init_options = {
     plugins = {
       {
         name = '@vue/typescript-plugin',
-        location = "/home/meursault/.nvm/versions/node/v16.18.0/bin/",
+        location = "/home/meursault/.nvm/versions/node/v16.18.0/lib/node_modules",
         languages = { 'vue' },
       },
     },
