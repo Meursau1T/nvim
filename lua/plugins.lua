@@ -17,7 +17,7 @@ require("lazy").setup({
   'itchyny/lightline.vim',
   'jiangmiao/auto-pairs', -- 括号自动补全
   { "ellisonleao/gruvbox.nvim", priority = 1000 , config = true, opts = ...},
-  { "rose-pine/neovim", name = "rose-pine" },
+  { "shaunsingh/nord.nvim" },
   {
     'nvim-treesitter/nvim-treesitter', -- 着色
     build = ':TSUpdate'

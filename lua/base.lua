@@ -59,7 +59,6 @@ vim.cmd [[
 --\ 'colorscheme': 'rosepine',
 --\ }
 
-
 -- nohls by enter
 vim.cmd[[
     noremap <leader><space> :nohlsearch<CR>
