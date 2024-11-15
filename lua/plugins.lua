@@ -73,5 +73,45 @@ require("lazy").setup({
     event = "VeryLazy",
     enabled = vim.fn.has("nvim-0.10.0") == 1,
   }, -- 注释工具
+  {
+    -- dir = "~/source/rsync-git.nvim",
+    "Meursau1T/rsync-git.nvim",
+    config = function()
+      require("rsync-git").setup {
+        rules = {
+          {
+            cond = "douyin_web/",
+            localPath = "/home/meursault/workspace/douyin_web",
+            remotePath = "/cloudide/workspace/douyin_web",
+            userIp = "cloudide-ws1f2f9f5f9c5d8672",
+          },
+          {
+            cond = "douyin_web_1/",
+            localPath = "/home/meursault/workspace/douyin_web_1",
+            remotePath = "/cloudide/workspace/douyin_web",
+            userIp = "cloudide-ws18a5a9be721c2d39",
+          },
+          {
+            cond = "douyin_web_2/",
+            userIp = "cloudide-ws502726de974cf8f5",
+            localPath = "/home/meursault/workspace/douyin_web_2",
+            remotePath = "/cloudide/workspace/douyin_web",
+          },
+          {
+            cond = "douyin_mobile/",
+            userIp = "cloudide-ws18a5a9be721c2d39",
+            localPath = "/home/meursault/workspace/douyin_mobile",
+            remotePath = "/cloudide/workspace/douyin_mobile",
+          }
+        },
+        config = {
+          showLog = true,
+          ignoreKeyword = "aweme_idl",
+        }
+      }
+    end
+  }
 })
+
+
 

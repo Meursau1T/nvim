@@ -54,10 +54,11 @@ vim.opt.virtualedit = 'onemore'
 vim.opt.laststatus = 2
 vim.cmd [[
   set noshowmode
+  let g:lightline = {
+   \ 'colorscheme': 'solarized',
+  \ }
 ]] --不再在最下行显示输入模式，因为有状态栏
---let g:lightline = {
---\ 'colorscheme': 'rosepine',
---\ }
+
 
 -- nohls by enter
 vim.cmd[[
@@ -70,43 +71,3 @@ vim.api.nvim_set_hl(0, "SignColumn", { bg = "none"})
 vim.cmd[[
     noremap <leader>cc :s#_\(\l\)#\u\1#g<CR>:nohlsearch<CR>
 ]]
-
-
---- rsync
-vim.api.nvim_create_autocmd({"BufWritePost"}, {
-  callback = function()
-    local curr = vim.api.nvim_buf_get_name(0)
-    if (string.match(curr, 'douyin_web_1/'))
-    then
-      vim.cmd([[
-        :AsyncRun -silent zx ~/source/rsync.mjs -u cloudide-ws18a5a9be721c2d39 -l /home/meursault/workspace/douyin_web_1 -r /cloudide/workspace/douyin_web -d true
-        call feedkeys("\<CR>")
-      ]])
-    elseif (string.match(curr, 'douyin_web_2/'))
-    then
-      vim.cmd([[
-        :AsyncRun -silent zx ~/source/rsync.mjs -u cloudide-ws502726de974cf8f5 -l /home/meursault/workspace/douyin_web_2 -r /cloudide/workspace/douyin_web -d true
-        call feedkeys("\<CR>")
-      ]])
-    elseif (string.match(curr, 'douyin_web/'))
-    then
-      vim.cmd([[
-        :AsyncRun -silent zx ~/source/rsync.mjs -u cloudide-ws1f2f9f5f9c5d8672 -l /home/meursault/workspace/douyin_web -r /cloudide/workspace/douyin_web -d true
-        call feedkeys("\<CR>")
-      ]])
-    elseif (string.match(curr, 'douyin_mobile/'))
-    then
-      vim.cmd([[
-        :AsyncRun -silent zx ~/source/rsync.mjs -u cloudide-ws18a5a9be721c2d39 -l /home/meursault/workspace/douyin_mobile -r /cloudide/workspace/douyin_mobile -d true
-        call feedkeys("\<CR>")
-      ]])
-    elseif (string.match(curr, 'douyin_home_web/'))
-   then
-      vim.cmd([[
-        :AsyncRun -silent zx ~/source/rsync.mjs -u wangxinfu.wxf@10.37.21.176 -l /home/meursault/workspace/douyin_home_web -r /home/wangxinfu.wxf/workspace/douyin_home_web -d true
-        call feedkeys("\<CR>")
-      ]])
-    else
-    end
-  end,
-})
