@@ -12,11 +12,22 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-
 require("lazy").setup({
   'itchyny/lightline.vim',
-  'jiangmiao/auto-pairs', -- 括号自动补全
+  "cohama/lexima.vim", -- 括号自动补全
+  -- 'jiangmiao/auto-pairs', 
   { "ellisonleao/gruvbox.nvim", priority = 1000 , config = true, opts = ...},
+  {
+    'sainnhe/everforest',
+    lazy = false,
+    priority = 1000,
+    config = function()
+      -- Optionally configure and load the colorscheme
+      -- directly inside the plugin declaration.
+      vim.g.everforest_background = 'soft'
+      vim.g.everforest_enable_italic = true
+    end
+  },
   { "shaunsingh/nord.nvim" },
   {
     'nvim-treesitter/nvim-treesitter', -- 着色
@@ -42,8 +53,17 @@ require("lazy").setup({
       }
     end
   },
+  {
+    'MeanderingProgrammer/render-markdown.nvim',
+    dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.nvim' }, -- if you use the mini.nvim suite
+    -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.icons' }, -- if you use standalone mini plugins
+    -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
+    ---@module 'render-markdown'
+    ---@type render.md.UserConfig
+    opts = {},
+  }, -- Markdown预览
   "sindrets/diffview.nvim", -- 查看Git文件历史Diff
-
+  "p00f/nvim-ts-rainbow", -- 彩虹括号
   'williamboman/mason.nvim',
   'skywind3000/asyncrun.vim', -- 用于后台调用rsync
 
