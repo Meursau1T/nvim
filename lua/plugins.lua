@@ -63,7 +63,7 @@ require("lazy").setup({
     opts = {},
   }, -- Markdown预览
   "sindrets/diffview.nvim", -- 查看Git文件历史Diff
-  "p00f/nvim-ts-rainbow", -- 彩虹括号
+  "HiPhish/rainbow-delimiters.nvim", -- 彩虹括号
   'williamboman/mason.nvim',
   'skywind3000/asyncrun.vim', -- 用于后台调用rsync
 
