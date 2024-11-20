@@ -28,7 +28,7 @@ require("lazy").setup({
       vim.g.everforest_enable_italic = true
     end
   },
-  { "shaunsingh/nord.nvim" },
+  -- { 'echasnovski/mini.icons', version = false },
   {
     'nvim-treesitter/nvim-treesitter', -- 着色
     build = ':TSUpdate'
@@ -66,13 +66,47 @@ require("lazy").setup({
   "HiPhish/rainbow-delimiters.nvim", -- 彩虹括号
   'williamboman/mason.nvim',
   'skywind3000/asyncrun.vim', -- 用于后台调用rsync
-
   {
-    "folke/ts-comments.nvim",
-    opts = {},
+    "folke/todo-comments.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+  },
+  -- Lua
+  { "folke/twilight.nvim", },
+  {
+    "folke/flash.nvim",
     event = "VeryLazy",
-    enabled = vim.fn.has("nvim-0.10.0") == 1,
-  }, -- 注释工具
+    ---@type Flash.Config
+    opts = {},
+    -- stylua: ignore
+    keys = {
+      { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
+      { "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
+      { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
+      { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
+      { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
+    },
+  },
+  {
+    "folke/snacks.nvim",
+    priority = 1000,
+    lazy = false,
+    opts = {
+      dashboard = { enabled = true },
+      bigfile = { enabled = true },
+      notifier = { enabled = true },
+      quickfile = { enabled = true },
+      statuscolumn = { enabled = true },
+      words = { enabled = true },
+    },
+    keys = {
+      { "<leader>gg", function() Snacks.lazygit() end, desc = "Lazygit" },
+      { "<leader>gb", function() Snacks.git.blame_line() end, desc = "Git Blame Line" },
+      { "<leader>gB", function() Snacks.gitbrowse() end, desc = "Git Browse" },
+      { "<leader>gf", function() Snacks.lazygit.log_file() end, desc = "Lazygit Current File History" },
+      { "]]",         function() Snacks.words.jump(vim.v.count1) end, desc = "Next Reference", mode = { "n", "t" } },
+      { "[[",         function() Snacks.words.jump(-vim.v.count1) end, desc = "Prev Reference", mode = { "n", "t" } },
+    },
+  },
   {
     -- dir = "~/source/rsync-git.nvim",
     "Meursau1T/rsync-git.nvim",
