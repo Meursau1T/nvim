@@ -24,7 +24,8 @@ end
 
 nvim_lsp.ts_ls.setup {
   on_attach = on_attach,
-  filetypes = { 'typescript', 'typescriptreact', 'typescript.tsx', 'javascript', 'vue', 'javascriptreact' },
+  -- filetypes = { 'typescript', 'typescriptreact', 'typescript.tsx', 'javascript', 'vue', 'javascriptreact' },
+  filetypes = { 'typescript', 'typescriptreact', 'typescript.tsx', 'javascript', 'javascriptreact' },
   cmd = { '/home/meursault/.local/share/fnm/aliases/default/bin/typescript-language-server', '--stdio'},
 
   init_options = {
@@ -46,4 +47,12 @@ nvim_lsp.rust_analyzer.setup{
   on_attach = on_attach,
 }
 
-nvim_lsp.volar.setup { }
+-- nvim_lsp.volar.setup { }
+
+nvim_lsp.volar.setup {
+  init_options = {
+    vue = {
+      hybridMode = false,
+    },
+  },
+}
