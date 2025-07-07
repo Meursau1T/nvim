@@ -91,6 +91,7 @@ require("lazy").setup({
       { "[[",         function() Snacks.words.jump(-vim.v.count1) end, desc = "Prev Reference", mode = { "n", "t" } },
     },
   },
+  { 'stevearc/conform.nvim', opts = {}, }, -- 自动格式化代码
 })
 
 

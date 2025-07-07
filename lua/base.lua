@@ -54,9 +54,6 @@ vim.opt.virtualedit = 'onemore'
 vim.opt.laststatus = 2
 vim.cmd [[
   set noshowmode
-  let g:lightline = {
-   \ 'colorscheme': 'solarized',
-  \ }
 ]] --不再在最下行显示输入模式，因为有状态栏
 
 
