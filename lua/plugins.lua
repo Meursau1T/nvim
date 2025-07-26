@@ -92,6 +92,7 @@ require("lazy").setup({
     },
   },
   { 'stevearc/conform.nvim', opts = {}, }, -- 自动格式化代码
+  { 'daschw/leaf.nvim', opts = {} }, -- Theme
 })
 
 
