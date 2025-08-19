@@ -26,13 +26,13 @@ nvim_lsp.ts_ls.setup {
   on_attach = on_attach,
   -- filetypes = { 'typescript', 'typescriptreact', 'typescript.tsx', 'javascript', 'vue', 'javascriptreact' },
   filetypes = { 'typescript', 'typescriptreact', 'typescript.tsx', 'javascript', 'javascriptreact' },
-  cmd = { '/home/meursault/.local/share/fnm/aliases/default/bin/typescript-language-server', '--stdio'},
+  cmd = { '/Users/xinfu.wang/.local/share/fnm/aliases/default/bin/typescript-language-server', '--stdio'},
 
   init_options = {
     plugins = {
       {
         name = '@vue/typescript-plugin',
-        location = "/home/meursault/.local/share/fnm/aliases/default/lib/node_modules",
+        location = "/Users/xinfu.wang/.local/share/fnm/aliases/default/lib/node_modules",
         languages = { 'vue' },
       },
     },
