@@ -41,8 +41,8 @@ require("lazy").setup({
   'glepnir/lspsaga.nvim',
 
   'nvim-lua/plenary.nvim', -- lua语言库，许多插件的基础依赖
-  'nvim-telescope/telescope.nvim',
-  'nvim-telescope/telescope-file-browser.nvim',
+  -- 'nvim-telescope/telescope.nvim',
+  -- 'nvim-telescope/telescope-file-browser.nvim',
   {
     'lewis6991/gitsigns.nvim', -- GitBlame和增删标记
     config = function()
@@ -80,19 +80,53 @@ require("lazy").setup({
       notifier = { enabled = true },
       quickfile = { enabled = true },
       statuscolumn = { enabled = true },
-      words = { enabled = true },
+      words = { enabled = false },
+      explorer = { enabled = true },
+      picker = { enabled = true },
+      scroll = { enabled = true },
     },
     keys = {
       { "<leader>gg", function() Snacks.lazygit() end, desc = "Lazygit" },
       { "<leader>gb", function() Snacks.git.blame_line() end, desc = "Git Blame Line" },
       { "<leader>gB", function() Snacks.gitbrowse() end, desc = "Git Browse" },
       { "<leader>gf", function() Snacks.lazygit.log_file() end, desc = "Lazygit Current File History" },
+      { "<leader>fgs", function() Snacks.picker.git_status() end, desc = "Git status" },
+      { "<leader>fb", function() Snacks.picker.buffers() end, desc = "Buffer list" },
+      { "<leader>ff", function() Snacks.picker.files() end, desc = "File list" },
+      { "<leader>fl", function() Snacks.picker.grep() end, desc = "Grep words" },
+      { "<leader>fk", function() Snacks.picker.grep_word() end, desc = "Grep current word" },
+      { "<leader>fe", function() Snacks.explorer() end, desc = "Explorer" },
       { "]]",         function() Snacks.words.jump(vim.v.count1) end, desc = "Next Reference", mode = { "n", "t" } },
       { "[[",         function() Snacks.words.jump(-vim.v.count1) end, desc = "Prev Reference", mode = { "n", "t" } },
     },
   },
   { 'stevearc/conform.nvim', opts = {}, }, -- 自动格式化代码
   { 'daschw/leaf.nvim', opts = {} }, -- Theme
+  {
+    "zbirenbaum/copilot.lua",
+    cmd = "Copilot",
+    event = "InsertEnter",
+    config = function()
+      require("copilot").setup({
+        suggestion = { enabled = false },
+        panel = { enabled = false },
+      })
+    end,
+  },
+  {
+  "zbirenbaum/copilot-cmp",
+    config = function ()
+      require("copilot_cmp").setup()
+    end
+  },
+  {
+    "olimorris/codecompanion.nvim",
+    opts = {},
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-treesitter/nvim-treesitter",
+    },
+  },
 })
 
 
