@@ -84,6 +84,7 @@ require("lazy").setup({
       explorer = { enabled = true },
       picker = { enabled = true },
       scroll = { enabled = true },
+      image = { enabled = true },
     },
     keys = {
       { "<leader>gg", function() Snacks.lazygit() end, desc = "Lazygit" },
