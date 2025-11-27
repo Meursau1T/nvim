@@ -13,7 +13,14 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-  'itchyny/lightline.vim',
+  {
+    'nvim-lualine/lualine.nvim',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    config = function()
+      require('lualine').setup {
+      }
+    end
+  },
   "cohama/lexima.vim", -- 括号自动补全
   -- 'jiangmiao/auto-pairs', 
   { "ellisonleao/gruvbox.nvim", priority = 1000 , config = true, opts = ...},
@@ -108,30 +115,26 @@ require("lazy").setup({
       { "<leader>ff", function() Snacks.picker.files() end, desc = "File list" },
       { "<leader>fl", function() Snacks.picker.grep() end, desc = "Grep words" },
       { "<leader>fk", function() Snacks.picker.grep_word() end, desc = "Grep current word" },
-      { "<leader>fe", function() Snacks.explorer() end, desc = "Explorer" },
+      { "<leader>fe",
+        function() Snacks.explorer({
+          layout = { preset = "telescope", preview = false },
+          auto_close = true,
+            win = {
+              list = {
+                keys = {
+                  ["<c-c>"] = "explorer_close",
+                },
+              },
+            },
+        }) end,
+        desc = "Explorer"
+      },
       { "]]",         function() Snacks.words.jump(vim.v.count1) end, desc = "Next Reference", mode = { "n", "t" } },
       { "[[",         function() Snacks.words.jump(-vim.v.count1) end, desc = "Prev Reference", mode = { "n", "t" } },
     },
   },
   { 'stevearc/conform.nvim', opts = {}, }, -- 自动格式化代码
   { 'daschw/leaf.nvim', opts = {} }, -- Theme
-  -- {
-  --   "zbirenbaum/copilot.lua",
-  --   cmd = "Copilot",
-  --   event = "InsertEnter",
-  --   config = function()
-  --     require("copilot").setup({
-  --       suggestion = { enabled = false },
-  --       panel = { enabled = false },
-  --     })
-  --   end,
-  -- },
-  -- {
-  -- "zbirenbaum/copilot-cmp",
-  --   config = function ()
-  --     require("copilot_cmp").setup()
-  --   end
-  -- },
   {
     'neoclide/coc.nvim',
     branch = 'release', -- 必须使用 release 分支
@@ -156,6 +159,22 @@ require("lazy").setup({
         nmap <leader>ca <Plug>(coc-codeaction)
       ]]
     end,
+  },
+  {
+    "CopilotC-Nvim/CopilotChat.nvim",
+    dependencies = {
+      { "nvim-lua/plenary.nvim", branch = "master" },
+    },
+    build = "make tiktoken",
+    opts = {
+      model = 'gpt-5',           -- AI model to use
+      temperature = 0.1,           -- Lower = focused, higher = creative
+      window = {
+        layout = 'vertical',       -- 'vertical', 'horizontal', 'float'
+        width = 0.5,              -- 50% of screen width
+      },
+      auto_insert_mode = true,     -- Enter insert mode when opening
+    },
   },
   {
     "olimorris/codecompanion.nvim",
