@@ -1,0 +1,9 @@
+{
+  "snippets.ultisnips.pythonPrompt": false,
+  "diagnostic.enableSign": true,       
+  "diagnostic.enableVirtualText": false, 
+  "diagnostic.enableMessage": "always", 
+  "diagnostic.enableHighlight": true,
+  "tsserver.maxTsServerMemory": 8192,
+  "tsserver.log": "verbose"
+}

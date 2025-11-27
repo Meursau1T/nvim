@@ -33,12 +33,12 @@ require("lazy").setup({
     'nvim-treesitter/nvim-treesitter', -- 着色
     build = ':TSUpdate'
   },
-  'onsails/lspkind-nvim', --- vscode-like pictograms
-  'hrsh7th/cmp-buffer', -- nvim-cmp source for buffer words
-  'hrsh7th/cmp-nvim-lsp', -- nvim-cmp source for neovim's built-in lsp
-  'hrsh7th/nvim-cmp', -- Completion
-  'neovim/nvim-lspconfig', -- LSP基础
-  'glepnir/lspsaga.nvim',
+  -- 'onsails/lspkind-nvim', --- vscode-like pictograms
+  -- 'hrsh7th/cmp-buffer', -- nvim-cmp source for buffer words
+  -- 'hrsh7th/cmp-nvim-lsp', -- nvim-cmp source for neovim's built-in lsp
+  -- 'hrsh7th/nvim-cmp', -- Completion
+  -- 'neovim/nvim-lspconfig', -- LSP基础
+  -- 'glepnir/lspsaga.nvim',
 
   'nvim-lua/plenary.nvim', -- lua语言库，许多插件的基础依赖
   -- 'nvim-telescope/telescope.nvim',
@@ -64,7 +64,7 @@ require("lazy").setup({
   }, -- Markdown预览
   "sindrets/diffview.nvim", -- 查看Git文件历史Diff
   "HiPhish/rainbow-delimiters.nvim", -- 彩虹括号
-  'williamboman/mason.nvim',
+  -- 'williamboman/mason.nvim',
   'skywind3000/asyncrun.vim', -- 用于后台调用rsync
   {
     "folke/todo-comments.nvim",
@@ -81,8 +81,8 @@ require("lazy").setup({
       quickfile = { enabled = true },
       statuscolumn = { enabled = true },
       words = { enabled = false },
-      explorer = { enabled = true },
-      picker = { enabled = true },
+      explorer = { enabled = false },
+      picker = { enabled = false },
       scroll = { enabled = true },
       image = { enabled = true },
     },
@@ -92,7 +92,7 @@ require("lazy").setup({
       { "<leader>gB", function() Snacks.gitbrowse() end, desc = "Git Browse" },
       { "<leader>gf", function() Snacks.lazygit.log_file() end, desc = "Lazygit Current File History" },
       { "<leader>fgs", function() Snacks.picker.git_status() end, desc = "Git status" },
-      { "<leader>fb", function() Snacks.picker.buffers() end, desc = "Buffer list" },
+      { "<leader>fb", function() Snacks.picker.buffers({ current = false }) end, desc = "Buffer list" },
       { "<leader>ff", function() Snacks.picker.files() end, desc = "File list" },
       { "<leader>fl", function() Snacks.picker.grep() end, desc = "Grep words" },
       { "<leader>fk", function() Snacks.picker.grep_word() end, desc = "Grep current word" },
@@ -103,22 +103,59 @@ require("lazy").setup({
   },
   { 'stevearc/conform.nvim', opts = {}, }, -- 自动格式化代码
   { 'daschw/leaf.nvim', opts = {} }, -- Theme
+  -- {
+  --   "zbirenbaum/copilot.lua",
+  --   cmd = "Copilot",
+  --   event = "InsertEnter",
+  --   config = function()
+  --     require("copilot").setup({
+  --       suggestion = { enabled = false },
+  --       panel = { enabled = false },
+  --     })
+  --   end,
+  -- },
+  -- {
+  -- "zbirenbaum/copilot-cmp",
+  --   config = function ()
+  --     require("copilot_cmp").setup()
+  --   end
+  -- },
   {
-    "zbirenbaum/copilot.lua",
-    cmd = "Copilot",
-    event = "InsertEnter",
+    'neoclide/coc.nvim',
+    branch = 'release', -- 必须使用 release 分支
+    event = 'VimEnter',
     config = function()
-      require("copilot").setup({
-        suggestion = { enabled = false },
-        panel = { enabled = false },
-      })
+      -- ❗重要：按键映射
+      -- 这里只是示例，你需要根据自己的习惯添加所有必要的映射
+      vim.cmd [[
+        " 跳转定义、引用等
+        nmap <silent> gd <Plug>(coc-definition)
+        nmap <silent> gy <Plug>(coc-type-definition)
+        nmap <silent> gi <Plug>(coc-implementation)
+        nmap <silent> gr <Plug>(coc-references)
+        " 重命名
+        nmap <leader>rn <Plug>(coc-rename)
+        " 格式化
+        xmap <leader>fm <Plug>(coc-format-selected)
+        nmap <leader>fm <Plug>(coc-format-selected)
+        " 悬浮文档/诊断
+        nnoremap <silent> K :call CocAction('doHover')<CR>
+        " 代码动作
+        nmap <leader>ca <Plug>(coc-codeaction)
+        " 补全：如果你保留了 lexima.vim，要确保它和 CoC 兼容
+        inoremap <silent><expr> <C-space> coc#refresh()
+        " ==================== Copilot 行内建议映射 ====================
+        " 接受/确认当前行内建议 (最常用)
+        " 我们使用 <C-g>I 来防止与 Tab 键的冲突
+        imap <silent><script><expr> <C-g>I coc#rpc#request('copilot', 'acceptInlineSuggestion', [])
+        " 切换到下一个建议 (如果Copilot提供了多个替代方案)
+        imap <silent><script><expr> <C-g>N coc#rpc#request('copilot', 'nextInlineSuggestion', [])
+        " 切换到上一个建议
+        imap <silent><script><expr> <C-g>P coc#rpc#request('copilot', 'prevInlineSuggestion', [])
+        " 隐藏/取消当前建议
+        imap <silent><script><expr> <C-g>D coc#rpc#request('copilot', 'hideInlineSuggestion', [])
+      ]]
     end,
-  },
-  {
-  "zbirenbaum/copilot-cmp",
-    config = function ()
-      require("copilot_cmp").setup()
-    end
   },
   {
     "olimorris/codecompanion.nvim",
