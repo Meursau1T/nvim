@@ -54,6 +54,18 @@ require("lazy").setup({
     end
   },
   {
+    "folke/flash.nvim",
+    event = "VeryLazy",
+    opts = {},
+    keys = {
+      { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
+      { "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
+      { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
+      { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
+      { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
+    },
+  },
+  {
     'MeanderingProgrammer/render-markdown.nvim',
     dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.nvim' }, -- if you use the mini.nvim suite
     -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.icons' }, -- if you use standalone mini plugins
@@ -142,18 +154,6 @@ require("lazy").setup({
         nnoremap <silent> K :call CocAction('doHover')<CR>
         " 代码动作
         nmap <leader>ca <Plug>(coc-codeaction)
-        " 补全：如果你保留了 lexima.vim，要确保它和 CoC 兼容
-        inoremap <silent><expr> <C-space> coc#refresh()
-        " ==================== Copilot 行内建议映射 ====================
-        " 接受/确认当前行内建议 (最常用)
-        " 我们使用 <C-g>I 来防止与 Tab 键的冲突
-        imap <silent><script><expr> <C-g>I coc#rpc#request('copilot', 'acceptInlineSuggestion', [])
-        " 切换到下一个建议 (如果Copilot提供了多个替代方案)
-        imap <silent><script><expr> <C-g>N coc#rpc#request('copilot', 'nextInlineSuggestion', [])
-        " 切换到上一个建议
-        imap <silent><script><expr> <C-g>P coc#rpc#request('copilot', 'prevInlineSuggestion', [])
-        " 隐藏/取消当前建议
-        imap <silent><script><expr> <C-g>D coc#rpc#request('copilot', 'hideInlineSuggestion', [])
       ]]
     end,
   },

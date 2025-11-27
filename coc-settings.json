@@ -5,5 +5,6 @@
   "diagnostic.enableMessage": "always", 
   "diagnostic.enableHighlight": true,
   "tsserver.maxTsServerMemory": 8192,
-  "tsserver.log": "verbose"
+  "tsserver.log": "verbose",
+  "copilot.enable": true
 }
