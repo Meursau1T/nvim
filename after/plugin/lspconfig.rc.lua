@@ -1,8 +1,3 @@
-local status, nvim_lsp = pcall(require, 'lspconfig')
-if (not status) then return end
-
-local protocol = require('vim.lsp.protocol')
-
 local on_attach = function(client, bufnr)
   -- always show gutter after attach
   -- vim.opt.signcolumn = "yes"
@@ -22,11 +17,28 @@ local on_attach = function(client, bufnr)
   --end
 end
 
-nvim_lsp.ts_ls.setup {
+-- vim.lsp.config("ts_ls", {
+--   on_attach = on_attach,
+--   filetypes = { 'typescript', 'typescriptreact', 'typescript.tsx', 'javascript', 'javascriptreact' },
+--   cmd = { '/Users/xinfu.wang/.local/share/fnm/aliases/default/bin/typescript-language-server', '--stdio'},
+--
+--   init_options = {
+--     plugins = {
+--       {
+--         name = '@vue/typescript-plugin',
+--         location = "/Users/xinfu.wang/.local/share/fnm/aliases/default/lib/node_modules",
+--         languages = { 'vue' },
+--       },
+--     },
+--   },
+-- })
+-- vim.lsp.enable({"ts_ls"})
+
+vim.lsp.config("tsgo", {
   on_attach = on_attach,
-  -- filetypes = { 'typescript', 'typescriptreact', 'typescript.tsx', 'javascript', 'vue', 'javascriptreact' },
   filetypes = { 'typescript', 'typescriptreact', 'typescript.tsx', 'javascript', 'javascriptreact' },
-  cmd = { '/Users/xinfu.wang/.local/share/fnm/aliases/default/bin/typescript-language-server', '--stdio'},
+  root_markers = { 'tsconfig.json', 'jsconfig.json', 'package.json', '.git', 'tsconfig.base.json' },
+  cmd = { '/Users/xinfu.wang/.local/share/fnm/aliases/default/bin/tsgo', '--lsp', '--stdio'},
 
   init_options = {
     plugins = {
@@ -37,22 +49,29 @@ nvim_lsp.ts_ls.setup {
       },
     },
   },
-}
+})
+vim.lsp.enable({"tsgo"})
 
-nvim_lsp.csharp_ls.setup {
-  on_attach = on_attach,
-}
+vim.lsp.config("csharp_ls", {
+  on_attach = on_attach
+})
+vim.lsp.enable({"csharp_ls"})
 
-nvim_lsp.rust_analyzer.setup{
-  on_attach = on_attach,
-}
+vim.lsp.config("csharp_ls", {
+  on_attach = on_attach
+})
+vim.lsp.enable({"csharp_ls"})
 
--- nvim_lsp.volar.setup { }
+vim.lsp.config("copilot", {
+  on_attach = on_attach
+})
+vim.lsp.enable({"copilot"})
 
-nvim_lsp.volar.setup {
-  init_options = {
-    vue = {
-      hybridMode = false,
-    },
-  },
-}
+-- vim.lsp.config("volar", {
+--   init_options = {
+--     vue = {
+--       hybridMode = false,
+--     },
+--   },
+-- })
+-- vim.lsp.enable({"volar"})

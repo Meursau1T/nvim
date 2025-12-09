@@ -5,5 +5,5 @@ require('plugins')
 vim.o.background = "light"
 vim.cmd([[
   let g:everforest_background = 'medium'
-  colorscheme everforest
+  colorscheme ayu-light
 ]])

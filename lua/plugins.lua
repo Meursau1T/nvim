@@ -22,8 +22,13 @@ require("lazy").setup({
     end
   },
   "cohama/lexima.vim", -- 括号自动补全
-  -- 'jiangmiao/auto-pairs', 
-  { "ellisonleao/gruvbox.nvim", priority = 1000 , config = true, opts = ...},
+  -- { "ellisonleao/gruvbox.nvim", priority = 1000 , config = true, opts = ...},
+  { "EdenEast/nightfox.nvim" },
+  { "Shatur/neovim-ayu" },
+  {
+  "esmuellert/vscode-diff.nvim",
+  dependencies = { "MunifTanjim/nui.nvim" },
+  },
   {
     'sainnhe/everforest',
     lazy = false,
@@ -35,21 +40,12 @@ require("lazy").setup({
       vim.g.everforest_enable_italic = true
     end
   },
-  -- { 'echasnovski/mini.icons', version = false },
   {
     'nvim-treesitter/nvim-treesitter', -- 着色
     build = ':TSUpdate'
   },
-  -- 'onsails/lspkind-nvim', --- vscode-like pictograms
-  -- 'hrsh7th/cmp-buffer', -- nvim-cmp source for buffer words
-  -- 'hrsh7th/cmp-nvim-lsp', -- nvim-cmp source for neovim's built-in lsp
-  -- 'hrsh7th/nvim-cmp', -- Completion
-  -- 'neovim/nvim-lspconfig', -- LSP基础
-  -- 'glepnir/lspsaga.nvim',
 
   'nvim-lua/plenary.nvim', -- lua语言库，许多插件的基础依赖
-  -- 'nvim-telescope/telescope.nvim',
-  -- 'nvim-telescope/telescope-file-browser.nvim',
   {
     'lewis6991/gitsigns.nvim', -- GitBlame和增删标记
     config = function()
@@ -63,7 +59,16 @@ require("lazy").setup({
   {
     "folke/flash.nvim",
     event = "VeryLazy",
-    opts = {},
+    opts = {
+      modes = {
+        search = {
+          enabled = true,
+        },
+        char = {
+          jump_labels = true,
+        },
+      },
+    },
     keys = {
       { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
       { "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
@@ -75,15 +80,17 @@ require("lazy").setup({
   {
     'MeanderingProgrammer/render-markdown.nvim',
     dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.nvim' }, -- if you use the mini.nvim suite
-    -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.icons' }, -- if you use standalone mini plugins
-    -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
-    ---@module 'render-markdown'
-    ---@type render.md.UserConfig
     opts = {},
   }, -- Markdown预览
   "sindrets/diffview.nvim", -- 查看Git文件历史Diff
   "HiPhish/rainbow-delimiters.nvim", -- 彩虹括号
-  -- 'williamboman/mason.nvim',
+  'williamboman/mason.nvim',
+  'onsails/lspkind-nvim', --- vscode-like pictograms
+  'hrsh7th/cmp-buffer', -- nvim-cmp source for buffer words
+  'hrsh7th/cmp-nvim-lsp', -- nvim-cmp source for neovim's built-in lsp
+  'hrsh7th/nvim-cmp', -- Completion
+  'neovim/nvim-lspconfig', -- LSP基础
+  'glepnir/lspsaga.nvim',
   'skywind3000/asyncrun.vim', -- 用于后台调用rsync
   {
     "folke/todo-comments.nvim",
@@ -99,9 +106,9 @@ require("lazy").setup({
       notifier = { enabled = true },
       quickfile = { enabled = true },
       statuscolumn = { enabled = true },
-      words = { enabled = false },
-      explorer = { enabled = false },
-      picker = { enabled = false },
+      words = { enabled = true },
+      explorer = { enabled = true },
+      picker = { enabled = true },
       scroll = { enabled = true },
       image = { enabled = true },
     },
@@ -117,7 +124,7 @@ require("lazy").setup({
       { "<leader>fk", function() Snacks.picker.grep_word() end, desc = "Grep current word" },
       { "<leader>fe",
         function() Snacks.explorer({
-          layout = { preset = "telescope", preview = false },
+          layout = { preset = "telescope", preview = false, reverse = false },
           auto_close = true,
             win = {
               list = {
@@ -134,56 +141,125 @@ require("lazy").setup({
     },
   },
   { 'stevearc/conform.nvim', opts = {}, }, -- 自动格式化代码
-  { 'daschw/leaf.nvim', opts = {} }, -- Theme
+  -- {
+  --   'neoclide/coc.nvim',
+  --   branch = 'release', -- 必须使用 release 分支
+  --   event = 'VimEnter',
+  --   config = function()
+  --     -- ❗重要：按键映射
+  --     -- 这里只是示例，你需要根据自己的习惯添加所有必要的映射
+  --     vim.cmd [[
+  --       " 跳转定义、引用等
+  --       nmap <silent> gd <Plug>(coc-definition)
+  --       nmap <silent> gy <Plug>(coc-type-definition)
+  --       nmap <silent> gi <Plug>(coc-implementation)
+  --       nmap <silent> gr <Plug>(coc-references)
+  --       " 重命名
+  --       nmap <leader>rn <Plug>(coc-rename)
+  --       " 格式化
+  --       xmap <leader>fm <Plug>(coc-format-selected)
+  --       nmap <leader>fm <Plug>(coc-format-selected)
+  --       " 悬浮文档/诊断
+  --       nnoremap <silent> K :call CocAction('doHover')<CR>
+  --       " 代码动作
+  --       nmap <leader>ca <Plug>(coc-codeaction)
+  --     ]]
+  --   end,
+  -- },
+  -- {
+  --   "zbirenbaum/copilot.lua",
+  --   cmd = "Copilot",
+  --   event = "InsertEnter",
+  --   config = function()
+  --     require("copilot").setup({
+  --       suggestion = { enabled = false },
+  --       panel = { enabled = false },
+  --     })
+  --   end,
+  -- },
+  -- {
+  -- "zbirenbaum/copilot-cmp",
+  --   config = function ()
+  --     require("copilot_cmp").setup()
+  --   end
+  -- },
   {
-    'neoclide/coc.nvim',
-    branch = 'release', -- 必须使用 release 分支
-    event = 'VimEnter',
-    config = function()
-      -- ❗重要：按键映射
-      -- 这里只是示例，你需要根据自己的习惯添加所有必要的映射
-      vim.cmd [[
-        " 跳转定义、引用等
-        nmap <silent> gd <Plug>(coc-definition)
-        nmap <silent> gy <Plug>(coc-type-definition)
-        nmap <silent> gi <Plug>(coc-implementation)
-        nmap <silent> gr <Plug>(coc-references)
-        " 重命名
-        nmap <leader>rn <Plug>(coc-rename)
-        " 格式化
-        xmap <leader>fm <Plug>(coc-format-selected)
-        nmap <leader>fm <Plug>(coc-format-selected)
-        " 悬浮文档/诊断
-        nnoremap <silent> K :call CocAction('doHover')<CR>
-        " 代码动作
-        nmap <leader>ca <Plug>(coc-codeaction)
-      ]]
-    end,
-  },
-  {
-    "CopilotC-Nvim/CopilotChat.nvim",
-    dependencies = {
-      { "nvim-lua/plenary.nvim", branch = "master" },
-    },
-    build = "make tiktoken",
+    "folke/sidekick.nvim",
     opts = {
-      model = 'gpt-5',           -- AI model to use
-      temperature = 0.1,           -- Lower = focused, higher = creative
-      window = {
-        layout = 'vertical',       -- 'vertical', 'horizontal', 'float'
-        width = 0.5,              -- 50% of screen width
+      -- add any options here
+      cli = {
+        mux = {
+          backend = "tmux",
+          enabled = true,
+        },
       },
-      auto_insert_mode = true,     -- Enter insert mode when opening
     },
-  },
-  {
-    "olimorris/codecompanion.nvim",
-    opts = {},
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "nvim-treesitter/nvim-treesitter",
+    keys = {
+      {
+        "<tab>",
+        function()
+          -- if there is a next edit, jump to it, otherwise apply it if any
+          if not require("sidekick").nes_jump_or_apply() then
+            return "<Tab>" -- fallback to normal tab
+          end
+        end,
+        expr = true,
+        desc = "Goto/Apply Next Edit Suggestion",
+      },
+      {
+        "<c-.>",
+        function() require("sidekick.cli").toggle() end,
+        desc = "Sidekick Toggle",
+        mode = { "n", "t", "i", "x" },
+      },
+      {
+        "<leader>aa",
+        function() require("sidekick.cli").toggle() end,
+        desc = "Sidekick Toggle CLI",
+      },
+      {
+        "<leader>as",
+        function() require("sidekick.cli").select() end,
+        -- Or to select only installed tools:
+        -- require("sidekick.cli").select({ filter = { installed = true } })
+        desc = "Select CLI",
+      },
+      {
+        "<leader>ad",
+        function() require("sidekick.cli").close() end,
+        desc = "Detach a CLI Session",
+      },
+      {
+        "<leader>at",
+        function() require("sidekick.cli").send({ msg = "{this}" }) end,
+        mode = { "x", "n" },
+        desc = "Send This",
+      },
+      {
+        "<leader>af",
+        function() require("sidekick.cli").send({ msg = "{file}" }) end,
+        desc = "Send File",
+      },
+      {
+        "<leader>av",
+        function() require("sidekick.cli").send({ msg = "{selection}" }) end,
+        mode = { "x" },
+        desc = "Send Visual Selection",
+      },
+      {
+        "<leader>ap",
+        function() require("sidekick.cli").prompt() end,
+        mode = { "n", "x" },
+        desc = "Sidekick Select Prompt",
+      },
+      -- Example of a keybinding to open Claude directly
+      {
+        "<leader>ac",
+        function() require("sidekick.cli").toggle({ name = "copilot", focus = true }) end,
+        desc = "Sidekick Toggle Copilot",
+      },
     },
-  },
+  }
 })
 
 

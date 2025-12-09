@@ -1,3 +1,9 @@
+-- node verion
+local fnm_node_path = '/Users/xinfu.wang/.local/share/fnm/aliases/latest/bin'
+vim.env.PATH = fnm_node_path .. ':' .. vim.env.PATH
+
+vim.g.node_host_prog = fnm_node_path .. '/node'
+
 -- python配置
 vim.cmd([[
     let g:python3_host_prog='C:/Users/MeursaulT/scoop/apps/python/current/python.exe'
