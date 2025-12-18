@@ -84,6 +84,7 @@ require("lazy").setup({
   }, -- Markdown预览
   "sindrets/diffview.nvim", -- 查看Git文件历史Diff
   "HiPhish/rainbow-delimiters.nvim", -- 彩虹括号
+  -- NVIM_LSP
   'williamboman/mason.nvim',
   'onsails/lspkind-nvim', --- vscode-like pictograms
   'hrsh7th/cmp-buffer', -- nvim-cmp source for buffer words
@@ -91,6 +92,7 @@ require("lazy").setup({
   'hrsh7th/nvim-cmp', -- Completion
   'neovim/nvim-lspconfig', -- LSP基础
   'glepnir/lspsaga.nvim',
+  -- NVIM_LSP END
   'skywind3000/asyncrun.vim', -- 用于后台调用rsync
   {
     "folke/todo-comments.nvim",
@@ -166,23 +168,23 @@ require("lazy").setup({
   --     ]]
   --   end,
   -- },
-  -- {
-  --   "zbirenbaum/copilot.lua",
-  --   cmd = "Copilot",
-  --   event = "InsertEnter",
-  --   config = function()
-  --     require("copilot").setup({
-  --       suggestion = { enabled = false },
-  --       panel = { enabled = false },
-  --     })
-  --   end,
-  -- },
-  -- {
-  -- "zbirenbaum/copilot-cmp",
-  --   config = function ()
-  --     require("copilot_cmp").setup()
-  --   end
-  -- },
+  {
+    "zbirenbaum/copilot.lua",
+    cmd = "Copilot",
+    event = "InsertEnter",
+    config = function()
+      require("copilot").setup({
+        suggestion = { enabled = false },
+        panel = { enabled = false },
+      })
+    end,
+  },
+  {
+  "zbirenbaum/copilot-cmp",
+    config = function ()
+      require("copilot_cmp").setup()
+    end
+  },
   {
     "folke/sidekick.nvim",
     opts = {
