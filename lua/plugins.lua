@@ -21,33 +21,44 @@ require("lazy").setup({
       }
     end
   },
-  "cohama/lexima.vim", -- 括号自动补全
+  {
+    "cohama/lexima.vim", -- 括号自动补全
+    event = 'VeryLazy',
+    lazy = true,
+  },
   -- { "ellisonleao/gruvbox.nvim", priority = 1000 , config = true, opts = ...},
-  { "EdenEast/nightfox.nvim" },
+  -- { "EdenEast/nightfox.nvim" },
   { "Shatur/neovim-ayu" },
   {
-  "esmuellert/vscode-diff.nvim",
-  dependencies = { "MunifTanjim/nui.nvim" },
+    "esmuellert/vscode-diff.nvim",
+    dependencies = { "MunifTanjim/nui.nvim" },
+    event = 'VeryLazy',
+    lazy = true,
   },
-  {
-    'sainnhe/everforest',
-    lazy = false,
-    priority = 1000,
-    config = function()
-      -- Optionally configure and load the colorscheme
-      -- directly inside the plugin declaration.
-      vim.g.everforest_background = 'soft'
-      vim.g.everforest_enable_italic = true
-    end
-  },
+  -- {
+  --   'sainnhe/everforest',
+  --   lazy = false,
+  --   priority = 1000,
+  --   config = function()
+  --     -- Optionally configure and load the colorscheme
+  --     -- directly inside the plugin declaration.
+  --     vim.g.everforest_background = 'soft'
+  --     vim.g.everforest_enable_italic = true
+  --   end
+  -- },
   {
     'nvim-treesitter/nvim-treesitter', -- 着色
     build = ':TSUpdate'
   },
-
-  'nvim-lua/plenary.nvim', -- lua语言库，许多插件的基础依赖
+  {
+    'nvim-lua/plenary.nvim', -- lua语言库，许多插件的基础依赖
+    event = 'VeryLazy',
+    lazy = true,
+  },
   {
     'lewis6991/gitsigns.nvim', -- GitBlame和增删标记
+    event = 'VeryLazy',
+    -- lazy = true,
     config = function()
       require('gitsigns').setup {
         signcolumn = false,
@@ -56,46 +67,79 @@ require("lazy").setup({
       }
     end
   },
-  {
-    "folke/flash.nvim",
-    event = "VeryLazy",
-    opts = {
-      modes = {
-        search = {
-          enabled = true,
-        },
-        char = {
-          jump_labels = true,
-        },
-      },
-    },
-    keys = {
-      { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
-      { "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
-      { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
-      { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
-      { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
-    },
-  },
+  -- {
+  --   "folke/flash.nvim",
+  --   event = "VeryLazy",
+  --   opts = {
+  --     modes = {
+  --       search = {
+  --         enabled = true,
+  --       },
+  --       char = {
+  --         jump_labels = true,
+  --       },
+  --     },
+  --   },
+  --   keys = {
+  --     { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
+  --     { "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
+  --     { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
+  --     { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
+  --     { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
+  --   },
+  -- },
   {
     'MeanderingProgrammer/render-markdown.nvim',
+    lazy = true,
+    event = 'VeryLazy',
     dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.nvim' }, -- if you use the mini.nvim suite
     opts = {},
   }, -- Markdown预览
-  "sindrets/diffview.nvim", -- 查看Git文件历史Diff
-  "HiPhish/rainbow-delimiters.nvim", -- 彩虹括号
+  {
+    "sindrets/diffview.nvim", -- 查看Git文件历史Diff
+    event = 'VeryLazy',
+    lazy = true,
+  },
+  {
+    "HiPhish/rainbow-delimiters.nvim", -- 彩虹括号
+    event = 'VeryLazy',
+    lazy = true,
+  },
   -- NVIM_LSP
-  'williamboman/mason.nvim',
-  'onsails/lspkind-nvim', --- vscode-like pictograms
-  'hrsh7th/cmp-buffer', -- nvim-cmp source for buffer words
-  'hrsh7th/cmp-nvim-lsp', -- nvim-cmp source for neovim's built-in lsp
-  'hrsh7th/nvim-cmp', -- Completion
-  'neovim/nvim-lspconfig', -- LSP基础
-  'glepnir/lspsaga.nvim',
+  {
+    'williamboman/mason.nvim',
+    event = 'VeryLazy',
+  },
+  {
+    'onsails/lspkind-nvim', --- vscode-like pictograms
+    event = 'VeryLazy',
+  },
+  {
+    'hrsh7th/cmp-buffer', -- nvim-cmp source for buffer words
+    event = 'VeryLazy',
+  },
+  {
+    'hrsh7th/cmp-nvim-lsp', -- nvim-cmp source for neovim's built-in lsp
+    event = 'VeryLazy',
+  },
+  {
+    'hrsh7th/nvim-cmp', -- Completion
+    event = 'VeryLazy',
+  },
+  {
+    'neovim/nvim-lspconfig', -- LSP基础
+    event = 'VeryLazy',
+  },
+  {
+    'glepnir/lspsaga.nvim',
+    event = 'VeryLazy',
+  },
   -- NVIM_LSP END
-  'skywind3000/asyncrun.vim', -- 用于后台调用rsync
+  -- 'skywind3000/asyncrun.vim', -- 用于后台调用rsync
   {
     "folke/todo-comments.nvim",
+    event = 'VeryLazy',
+    lazy = true,
     dependencies = { "nvim-lua/plenary.nvim" },
   },
   {
@@ -142,7 +186,12 @@ require("lazy").setup({
       { "[[",         function() Snacks.words.jump(-vim.v.count1) end, desc = "Prev Reference", mode = { "n", "t" } },
     },
   },
-  { 'stevearc/conform.nvim', opts = {}, }, -- 自动格式化代码
+  {
+    'stevearc/conform.nvim',
+    opts = {},
+    lazy = true,
+    event = 'VeryLazy',
+  }, -- 自动格式化代码
   -- {
   --   'neoclide/coc.nvim',
   --   branch = 'release', -- 必须使用 release 分支
@@ -168,100 +217,6 @@ require("lazy").setup({
   --     ]]
   --   end,
   -- },
-  {
-    "zbirenbaum/copilot.lua",
-    cmd = "Copilot",
-    event = "InsertEnter",
-    config = function()
-      require("copilot").setup({
-        suggestion = { enabled = false },
-        panel = { enabled = false },
-      })
-    end,
-  },
-  {
-  "zbirenbaum/copilot-cmp",
-    config = function ()
-      require("copilot_cmp").setup()
-    end
-  },
-  {
-    "folke/sidekick.nvim",
-    opts = {
-      -- add any options here
-      cli = {
-        mux = {
-          backend = "tmux",
-          enabled = true,
-        },
-      },
-    },
-    keys = {
-      {
-        "<tab>",
-        function()
-          -- if there is a next edit, jump to it, otherwise apply it if any
-          if not require("sidekick").nes_jump_or_apply() then
-            return "<Tab>" -- fallback to normal tab
-          end
-        end,
-        expr = true,
-        desc = "Goto/Apply Next Edit Suggestion",
-      },
-      {
-        "<c-.>",
-        function() require("sidekick.cli").toggle() end,
-        desc = "Sidekick Toggle",
-        mode = { "n", "t", "i", "x" },
-      },
-      {
-        "<leader>aa",
-        function() require("sidekick.cli").toggle() end,
-        desc = "Sidekick Toggle CLI",
-      },
-      {
-        "<leader>as",
-        function() require("sidekick.cli").select() end,
-        -- Or to select only installed tools:
-        -- require("sidekick.cli").select({ filter = { installed = true } })
-        desc = "Select CLI",
-      },
-      {
-        "<leader>ad",
-        function() require("sidekick.cli").close() end,
-        desc = "Detach a CLI Session",
-      },
-      {
-        "<leader>at",
-        function() require("sidekick.cli").send({ msg = "{this}" }) end,
-        mode = { "x", "n" },
-        desc = "Send This",
-      },
-      {
-        "<leader>af",
-        function() require("sidekick.cli").send({ msg = "{file}" }) end,
-        desc = "Send File",
-      },
-      {
-        "<leader>av",
-        function() require("sidekick.cli").send({ msg = "{selection}" }) end,
-        mode = { "x" },
-        desc = "Send Visual Selection",
-      },
-      {
-        "<leader>ap",
-        function() require("sidekick.cli").prompt() end,
-        mode = { "n", "x" },
-        desc = "Sidekick Select Prompt",
-      },
-      -- Example of a keybinding to open Claude directly
-      {
-        "<leader>ac",
-        function() require("sidekick.cli").toggle({ name = "copilot", focus = true }) end,
-        desc = "Sidekick Toggle Copilot",
-      },
-    },
-  }
 })
 
 
