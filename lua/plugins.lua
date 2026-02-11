@@ -14,138 +14,366 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
   {
-    'nvim-lualine/lualine.nvim',
-    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    "Shatur/neovim-ayu",
+    lazy = false,
+    priority = 1000,
+  },
+  {
+    "nvim-lualine/lualine.nvim",
+    lazy = false,
+    dependencies = { "nvim-tree/nvim-web-devicons" },
     config = function()
-      require('lualine').setup {
-      }
-    end
+      require("lualine").setup({})
+    end,
   },
   {
     "cohama/lexima.vim", -- 括号自动补全
-    event = 'VeryLazy',
-    lazy = true,
-  },
-  -- { "ellisonleao/gruvbox.nvim", priority = 1000 , config = true, opts = ...},
-  -- { "EdenEast/nightfox.nvim" },
-  { "Shatur/neovim-ayu" },
-  {
-    "esmuellert/vscode-diff.nvim",
-    dependencies = { "MunifTanjim/nui.nvim" },
-    event = 'VeryLazy',
-    lazy = true,
-  },
-  -- {
-  --   'sainnhe/everforest',
-  --   lazy = false,
-  --   priority = 1000,
-  --   config = function()
-  --     -- Optionally configure and load the colorscheme
-  --     -- directly inside the plugin declaration.
-  --     vim.g.everforest_background = 'soft'
-  --     vim.g.everforest_enable_italic = true
-  --   end
-  -- },
-  {
-    'nvim-treesitter/nvim-treesitter', -- 着色
-    build = ':TSUpdate'
+    event = "InsertEnter",
   },
   {
-    'nvim-lua/plenary.nvim', -- lua语言库，许多插件的基础依赖
-    event = 'VeryLazy',
-    lazy = true,
-  },
-  {
-    'lewis6991/gitsigns.nvim', -- GitBlame和增删标记
-    event = 'VeryLazy',
-    -- lazy = true,
+    "nvim-treesitter/nvim-treesitter", -- 着色
+    event = { "BufReadPre", "BufNewFile" },
+    build = ":TSUpdate",
     config = function()
-      require('gitsigns').setup {
-        signcolumn = false,
-        numhl = true, -- Toggle with `:Gitsigns toggle_current_line_blame`
-        current_line_blame = true,
-      }
-    end
+      local ok, configs = pcall(require, "nvim-treesitter.configs")
+      if not ok then
+        return
+      end
+
+      configs.setup({
+        highlight = {
+          enable = true,
+          disable = {},
+        },
+        indent = {
+          enable = true,
+          disable = {},
+        },
+        ensure_installed = { "tsx", "typescript", "lua", "json", "css" },
+      })
+    end,
   },
-  -- {
-  --   "folke/flash.nvim",
-  --   event = "VeryLazy",
-  --   opts = {
-  --     modes = {
-  --       search = {
-  --         enabled = true,
-  --       },
-  --       char = {
-  --         jump_labels = true,
-  --       },
-  --     },
-  --   },
-  --   keys = {
-  --     { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
-  --     { "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
-  --     { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
-  --     { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
-  --     { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
-  --   },
-  -- },
   {
-    'MeanderingProgrammer/render-markdown.nvim',
-    lazy = true,
-    event = 'VeryLazy',
-    dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.nvim' }, -- if you use the mini.nvim suite
+    "lewis6991/gitsigns.nvim", -- GitBlame和增删标记
+    event = { "BufReadPre", "BufNewFile" },
+    cond = function()
+      return vim.fn.executable("git") == 1
+    end,
+    config = function()
+      require("gitsigns").setup({
+        signcolumn = false,
+        numhl = true,
+        current_line_blame = true,
+      })
+    end,
+  },
+  {
+    "MeanderingProgrammer/render-markdown.nvim",
+    ft = { "markdown" },
+    dependencies = { "nvim-treesitter/nvim-treesitter", "echasnovski/mini.nvim" },
     opts = {},
-  }, -- Markdown预览
+  },
   {
     "sindrets/diffview.nvim", -- 查看Git文件历史Diff
-    event = 'VeryLazy',
-    lazy = true,
+    cmd = {
+      "DiffviewOpen",
+      "DiffviewClose",
+      "DiffviewToggleFiles",
+      "DiffviewFocusFiles",
+      "DiffviewRefresh",
+      "DiffviewFileHistory",
+    },
+    dependencies = { "nvim-lua/plenary.nvim" },
+    config = function()
+      local actions = require("diffview.actions")
+
+      require("diffview").setup({
+        diff_binaries = false,
+        enhanced_diff_hl = false,
+        git_cmd = { "git" },
+        hg_cmd = { "hg" },
+        use_icons = true,
+        show_help_hints = true,
+        watch_index = true,
+        icons = {
+          folder_closed = "",
+          folder_open = "",
+        },
+        signs = {
+          fold_closed = "",
+          fold_open = "",
+          done = "✓",
+        },
+        view = {
+          default = {
+            layout = "diff2_horizontal",
+            disable_diagnostics = false,
+            winbar_info = false,
+          },
+          merge_tool = {
+            layout = "diff3_horizontal",
+            disable_diagnostics = true,
+            winbar_info = true,
+          },
+          file_history = {
+            layout = "diff2_horizontal",
+            disable_diagnostics = false,
+            winbar_info = false,
+          },
+        },
+        file_panel = {
+          listing_style = "tree",
+          tree_options = {
+            flatten_dirs = true,
+            folder_statuses = "only_folded",
+          },
+          win_config = {
+            position = "left",
+            width = 35,
+            win_opts = {},
+          },
+        },
+        file_history_panel = {
+          log_options = {
+            git = {
+              single_file = {
+                diff_merges = "combined",
+              },
+              multi_file = {
+                diff_merges = "first-parent",
+              },
+            },
+            hg = {
+              single_file = {},
+              multi_file = {},
+            },
+          },
+          win_config = {
+            position = "bottom",
+            height = 16,
+            win_opts = {},
+          },
+        },
+        commit_log_panel = {
+          win_config = {},
+        },
+        default_args = {
+          DiffviewOpen = {},
+          DiffviewFileHistory = {},
+        },
+        hooks = {},
+        keymaps = {
+          disable_defaults = false,
+          view = {
+            { "n", "<tab>", actions.select_next_entry, { desc = "Open the diff for the next file" } },
+            { "n", "<s-tab>", actions.select_prev_entry, { desc = "Open the diff for the previous file" } },
+            { "n", "[F", actions.select_first_entry, { desc = "Open the diff for the first file" } },
+            { "n", "]F", actions.select_last_entry, { desc = "Open the diff for the last file" } },
+            { "n", "gf", actions.goto_file_edit, { desc = "Open the file in the previous tabpage" } },
+            { "n", "<C-w><C-f>", actions.goto_file_split, { desc = "Open the file in a new split" } },
+            { "n", "<C-w>gf", actions.goto_file_tab, { desc = "Open the file in a new tabpage" } },
+            { "n", "<leader>e", actions.focus_files, { desc = "Bring focus to the file panel" } },
+            { "n", "<leader>b", actions.toggle_files, { desc = "Toggle the file panel." } },
+            { "n", "g<C-x>", actions.cycle_layout, { desc = "Cycle through available layouts." } },
+            { "n", "[x", actions.prev_conflict, { desc = "In the merge-tool: jump to the previous conflict" } },
+            { "n", "]x", actions.next_conflict, { desc = "In the merge-tool: jump to the next conflict" } },
+            { "n", "<leader>co", actions.conflict_choose("ours"), { desc = "Choose the OURS version of a conflict" } },
+            { "n", "<leader>ct", actions.conflict_choose("theirs"), { desc = "Choose the THEIRS version of a conflict" } },
+            { "n", "<leader>cb", actions.conflict_choose("base"), { desc = "Choose the BASE version of a conflict" } },
+            { "n", "<leader>ca", actions.conflict_choose("all"), { desc = "Choose all the versions of a conflict" } },
+            { "n", "dx", actions.conflict_choose("none"), { desc = "Delete the conflict region" } },
+            { "n", "<leader>cO", actions.conflict_choose_all("ours"), { desc = "Choose the OURS version of a conflict for the whole file" } },
+            { "n", "<leader>cT", actions.conflict_choose_all("theirs"), { desc = "Choose the THEIRS version of a conflict for the whole file" } },
+            { "n", "<leader>cB", actions.conflict_choose_all("base"), { desc = "Choose the BASE version of a conflict for the whole file" } },
+            { "n", "<leader>cA", actions.conflict_choose_all("all"), { desc = "Choose all the versions of a conflict for the whole file" } },
+            { "n", "dX", actions.conflict_choose_all("none"), { desc = "Delete the conflict region for the whole file" } },
+          },
+        },
+      })
+    end,
+  },
+  {
+    "esmuellert/vscode-diff.nvim",
+    cmd = { "CodeDiff" },
+    dependencies = { "MunifTanjim/nui.nvim" },
   },
   {
     "HiPhish/rainbow-delimiters.nvim", -- 彩虹括号
-    event = 'VeryLazy',
-    lazy = true,
+    ft = { "lua", "javascript", "typescript", "javascriptreact", "typescriptreact" },
+    init = function()
+      vim.g.rainbow_delimiters = {
+        query = {
+          [""] = "rainbow-delimiters",
+          lua = "rainbow-blocks",
+        },
+        priority = {
+          [""] = 110,
+          lua = 210,
+        },
+        highlight = {
+          "RainbowDelimiterRed",
+          "RainbowDelimiterYellow",
+          "RainbowDelimiterBlue",
+          "RainbowDelimiterOrange",
+          "RainbowDelimiterGreen",
+          "RainbowDelimiterViolet",
+          "RainbowDelimiterCyan",
+        },
+      }
+    end,
+    config = function()
+      local rd = require("rainbow-delimiters")
+      vim.g.rainbow_delimiters = vim.tbl_deep_extend("force", vim.g.rainbow_delimiters or {}, {
+        strategy = {
+          [""] = rd.strategy["global"],
+          vim = rd.strategy["local"],
+        },
+      })
+    end,
   },
-  -- NVIM_LSP
   {
-    'williamboman/mason.nvim',
-    event = 'VeryLazy',
+    "williamboman/mason.nvim",
+    event = { "BufReadPre", "BufNewFile" },
+    opts = {},
   },
   {
-    'onsails/lspkind-nvim', --- vscode-like pictograms
-    event = 'VeryLazy',
+    "neovim/nvim-lspconfig", -- LSP基础
+    event = { "BufReadPre", "BufNewFile" },
+    config = function()
+      local on_attach = function(_, _)
+        vim.diagnostic.config({
+          virtual_text = true,
+          signs = false,
+          underline = true,
+          update_in_insert = false,
+          severity_sort = false,
+        })
+      end
+
+      vim.lsp.config("tsgo", {
+        on_attach = on_attach,
+        filetypes = { "typescript", "typescriptreact", "typescript.tsx", "javascript", "javascriptreact" },
+        root_markers = { "tsconfig.json", "jsconfig.json", "package.json", ".git", "tsconfig.base.json" },
+        cmd = { "/Users/xinfu.wang/.local/share/fnm/aliases/default/bin/tsgo", "--lsp", "--stdio" },
+        init_options = {
+          plugins = {
+            {
+              name = "@vue/typescript-plugin",
+              location = "/Users/xinfu.wang/.local/share/fnm/aliases/default/lib/node_modules",
+              languages = { "vue" },
+            },
+          },
+        },
+      })
+      vim.lsp.enable({ "tsgo" })
+
+      vim.lsp.config("csharp_ls", {
+        on_attach = on_attach,
+      })
+      vim.lsp.enable({ "csharp_ls" })
+    end,
   },
   {
-    'hrsh7th/cmp-buffer', -- nvim-cmp source for buffer words
-    event = 'VeryLazy',
+    "hrsh7th/nvim-cmp", -- Completion
+    event = "InsertEnter",
+    dependencies = {
+      "hrsh7th/cmp-buffer",
+      "hrsh7th/cmp-nvim-lsp",
+      "onsails/lspkind-nvim",
+    },
+    config = function()
+      local cmp_ok, cmp = pcall(require, "cmp")
+      if not cmp_ok then
+        return
+      end
+
+      local lspkind_ok, lspkind = pcall(require, "lspkind")
+      if not lspkind_ok then
+        return
+      end
+
+      cmp.setup({
+        mapping = cmp.mapping.preset.insert({
+          ["<C-d>"] = cmp.mapping.scroll_docs(-4),
+          ["<C-f>"] = cmp.mapping.scroll_docs(4),
+          ["<C-Space>"] = cmp.mapping.complete(),
+          ["<C-e>"] = cmp.mapping.close(),
+          ["<CR>"] = cmp.mapping.confirm({
+            behavior = cmp.ConfirmBehavior.Replace,
+            select = true,
+          }),
+        }),
+        sources = cmp.config.sources({
+          { name = "nvim_lsp" },
+          { name = "buffer" },
+        }),
+        formatting = {
+          format = lspkind.cmp_format({
+            with_text = false,
+            maxwidth = 50,
+          }),
+        },
+      })
+
+      vim.cmd([[
+        set completeopt=menuone,noinsert,noselect
+        highlight! default link CmpItemKind CmpItemMenuDefault
+      ]])
+    end,
   },
   {
-    'hrsh7th/cmp-nvim-lsp', -- nvim-cmp source for neovim's built-in lsp
-    event = 'VeryLazy',
+    "glepnir/lspsaga.nvim",
+    event = "LspAttach",
+    config = function()
+      local ok, saga = pcall(require, "lspsaga")
+      if not ok then
+        return
+      end
+
+      saga.setup({
+        server_filetype_map = {},
+        lightbulb = {
+          enable = false,
+        },
+      })
+
+      local opts = { noremap = true, silent = true }
+      vim.keymap.set("n", "K", "<Cmd>Lspsaga hover_doc<cr>", opts)
+      vim.keymap.set("n", "<C-k>", "<Cmd>Lspsaga show_line_diagnostics<cr>", opts)
+      vim.keymap.set("n", "T", "<Cmd>Lspsaga term_toggle<cr>", opts)
+      vim.keymap.set("n", "gd", "<Cmd>Lspsaga goto_definition<cr>", opts)
+      vim.keymap.set("n", "gr", "<Cmd>Lspsaga rename<cr>", opts)
+      vim.keymap.set("n", "go", "<Cmd>Lspsaga outline<cr>", opts)
+    end,
   },
-  {
-    'hrsh7th/nvim-cmp', -- Completion
-    event = 'VeryLazy',
-  },
-  {
-    'neovim/nvim-lspconfig', -- LSP基础
-    event = 'VeryLazy',
-  },
-  {
-    'glepnir/lspsaga.nvim',
-    event = 'VeryLazy',
-  },
-  -- NVIM_LSP END
-  -- 'skywind3000/asyncrun.vim', -- 用于后台调用rsync
   {
     "folke/todo-comments.nvim",
-    event = 'VeryLazy',
-    lazy = true,
+    event = { "BufReadPost", "BufNewFile" },
     dependencies = { "nvim-lua/plenary.nvim" },
+    opts = {},
+  },
+  {
+    "stevearc/conform.nvim",
+    event = "BufWritePre",
+    config = function()
+      require("conform").setup({
+        format_on_save = {
+          timeout_ms = 500,
+          lsp_format = "fallback",
+        },
+        formatters_by_ft = {
+          javascript = { "prettier", stop_after_first = true },
+          typescript = { "prettier", stop_after_first = true },
+          javascriptreact = { "prettier", stop_after_first = true },
+          typescriptreact = { "prettier", stop_after_first = true },
+        },
+      })
+    end,
   },
   {
     "folke/snacks.nvim",
     priority = 1000,
-    lazy = false,
+    event = "VimEnter",
     opts = {
       dashboard = { enabled = true },
       bigfile = { enabled = true },
@@ -159,19 +387,21 @@ require("lazy").setup({
       image = { enabled = true },
     },
     keys = {
-      { "<leader>gg", function() Snacks.lazygit() end, desc = "Lazygit" },
-      { "<leader>gb", function() Snacks.git.blame_line() end, desc = "Git Blame Line" },
-      { "<leader>gB", function() Snacks.gitbrowse() end, desc = "Git Browse" },
-      { "<leader>gf", function() Snacks.lazygit.log_file() end, desc = "Lazygit Current File History" },
-      { "<leader>fgs", function() Snacks.picker.git_status() end, desc = "Git status" },
-      { "<leader>fb", function() Snacks.picker.buffers({ current = false }) end, desc = "Buffer list" },
-      { "<leader>ff", function() Snacks.picker.files() end, desc = "File list" },
-      { "<leader>fl", function() Snacks.picker.grep() end, desc = "Grep words" },
-      { "<leader>fk", function() Snacks.picker.grep_word() end, desc = "Grep current word" },
-      { "<leader>fe",
-        function() Snacks.explorer({
-          layout = { preset = "telescope", preview = false, reverse = false },
-          auto_close = true,
+      { "<leader>gg", function() require("snacks").lazygit() end, desc = "Lazygit" },
+      { "<leader>gb", function() require("snacks").git.blame_line() end, desc = "Git Blame Line" },
+      { "<leader>gB", function() require("snacks").gitbrowse() end, desc = "Git Browse" },
+      { "<leader>gf", function() require("snacks").lazygit.log_file() end, desc = "Lazygit Current File History" },
+      { "<leader>fgs", function() require("snacks").picker.git_status() end, desc = "Git status" },
+      { "<leader>fb", function() require("snacks").picker.buffers({ current = false }) end, desc = "Buffer list" },
+      { "<leader>ff", function() require("snacks").picker.files() end, desc = "File list" },
+      { "<leader>fl", function() require("snacks").picker.grep() end, desc = "Grep words" },
+      { "<leader>fk", function() require("snacks").picker.grep_word() end, desc = "Grep current word" },
+      {
+        "<leader>fe",
+        function()
+          require("snacks").explorer({
+            layout = { preset = "default", preview = false, reverse = false },
+            auto_close = true,
             win = {
               list = {
                 keys = {
@@ -179,45 +409,14 @@ require("lazy").setup({
                 },
               },
             },
-        }) end,
-        desc = "Explorer"
+          })
+        end,
+        desc = "Explorer",
       },
-      { "]]",         function() Snacks.words.jump(vim.v.count1) end, desc = "Next Reference", mode = { "n", "t" } },
-      { "[[",         function() Snacks.words.jump(-vim.v.count1) end, desc = "Prev Reference", mode = { "n", "t" } },
+      { "]]", function() require("snacks").words.jump(vim.v.count1) end, desc = "Next Reference", mode = { "n", "t" } },
+      { "[[", function() require("snacks").words.jump(-vim.v.count1) end, desc = "Prev Reference", mode = { "n", "t" } },
     },
   },
-  {
-    'stevearc/conform.nvim',
-    opts = {},
-    lazy = true,
-    event = 'VeryLazy',
-  }, -- 自动格式化代码
-  -- {
-  --   'neoclide/coc.nvim',
-  --   branch = 'release', -- 必须使用 release 分支
-  --   event = 'VimEnter',
-  --   config = function()
-  --     -- ❗重要：按键映射
-  --     -- 这里只是示例，你需要根据自己的习惯添加所有必要的映射
-  --     vim.cmd [[
-  --       " 跳转定义、引用等
-  --       nmap <silent> gd <Plug>(coc-definition)
-  --       nmap <silent> gy <Plug>(coc-type-definition)
-  --       nmap <silent> gi <Plug>(coc-implementation)
-  --       nmap <silent> gr <Plug>(coc-references)
-  --       " 重命名
-  --       nmap <leader>rn <Plug>(coc-rename)
-  --       " 格式化
-  --       xmap <leader>fm <Plug>(coc-format-selected)
-  --       nmap <leader>fm <Plug>(coc-format-selected)
-  --       " 悬浮文档/诊断
-  --       nnoremap <silent> K :call CocAction('doHover')<CR>
-  --       " 代码动作
-  --       nmap <leader>ca <Plug>(coc-codeaction)
-  --     ]]
-  --   end,
-  -- },
+}, {
+  defaults = { lazy = true },
 })
-
-
-
